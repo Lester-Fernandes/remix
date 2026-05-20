@@ -7,12 +7,17 @@
 		"abi": [
 			{
 				"inputs": [],
-				"name": "getNumber",
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "getAddress",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "address",
 						"name": "",
-						"type": "uint256"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -20,12 +25,12 @@
 			},
 			{
 				"inputs": [],
-				"name": "number",
+				"name": "owner",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "address",
 						"name": "",
-						"type": "uint256"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -34,14 +39,27 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_newNumber",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "_newAddress",
+						"type": "address"
 					}
 				],
-				"name": "updateNumber",
+				"name": "storeAddress",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "userAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -58,7 +76,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val2.sol": "StateOverwritevul"
+			"val3.sol": "StoreAddress"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -72,12 +90,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"val2.sol": {
-			"keccak256": "0x0cc283be255f927d706182884a610f42689fd6a437e58187b64fe76447293cff",
+		"val3.sol": {
+			"keccak256": "0x9c307df79a132e357a719161d84a379981332b42f25db9dc1327b1ebdcdb2855",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c65c52b63f864686e5d9f405c8e23ad4186d820c9f3ad8a5387a1f53d84b5e36",
-				"dweb:/ipfs/QmPMWV9GPtjabRUvYPkYcSvjRGkYJY7bMesKAbH9bhAQ1Q"
+				"bzz-raw://241adb51c0fe63ed83429f5a2ce9a14d62085da6ed95014e6b7c2be96319861b",
+				"dweb:/ipfs/QmP1J5daBLgSk1q5ero8xq9SZTVnDzk3d6Hm2qtjkU5hv4"
 			]
 		}
 	},
