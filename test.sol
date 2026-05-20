@@ -36,13 +36,12 @@ AUDITOR FOCUS:
 =========================================================
 */
 
-contract StoreUint {
+contract StoreUintVul {
 
     uint256 public number;
-    address public owner= 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
+    
 
     function storeNumber(uint256 _newNumber) public {
-        require(owner == msg.sender, "You are not the Owner");
         number = _newNumber;
     }
 
@@ -154,3 +153,26 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+
+//patched code
+contract StoreUint 
+{
+
+    uint256 public number;
+    address public owner;
+
+    constructor()
+    {
+        owner = msg.sender;
+    }
+    function storeNumber(uint256 _newNumber) public 
+    {
+        require(msg.sender == owner, "Only owner can call this function");
+        number = _newNumber;
+    }
+
+    function getNumber() public view returns (uint256) 
+    {
+        return number;
+    }
+}
