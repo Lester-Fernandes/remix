@@ -1,0 +1,129 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_number",
+						"type": "uint256"
+					}
+				],
+				"name": "calculateSquares",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createMemoryArray",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_number",
+						"type": "uint256"
+					}
+				],
+				"name": "multiplyValues",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "storeValue",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "storedNumbers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"val18.sol": "MemoryArray"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"val18.sol": {
+			"keccak256": "0xf987e5d849b053d1c10268617b2427e9e032d34c17701a47c5cc5fdcb5d8cd60",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7b5ac293ec11a5555a02adb658b99fde57f8ef91fd57a78fb94a5da6bf937cd1",
+				"dweb:/ipfs/QmXtibQ52Hb4FT2ZfYn5S8RZPNuM2XHoigwFyMZef4QPAb"
+			]
+		}
+	},
+	"version": 1
+}
