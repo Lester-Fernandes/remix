@@ -418,6 +418,8 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+//Patched code
+
 contract StorageReference 
 {
 
