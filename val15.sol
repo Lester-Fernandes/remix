@@ -418,6 +418,95 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Understanding Memory Copy vs Storage Reference Behavior in Struct Handling
+
+Severity: Low
+
+Reason: Developers may mistakenly assume that modifying a memory copy affects blockchain storage.
+
+Location:
+        Contract: StorageReferenceval
+        Functions:
+        updateAge()
+        deactivateUser()
+
+Vulnerability Description:
+
+The contract demonstrates the use of a storage reference:
+
+User storage user = users[msg.sender];
+
+This creates a direct pointer to blockchain storage.
+
+Therefore, changes such as:
+
+user.age = _newAge;
+
+immediately modify permanent contract state.
+
+However, developers often confuse this with memory behavior.
+
+Using:
+
+User memory user = users[msg.sender];
+
+creates an independent temporary copy.
+
+Changes made to the memory variable do NOT affect storage.
+
+Understanding this distinction is critical for secure Solidity development.
+
+Impact: Misunderstanding storage vs memory behavior may cause
+        unintended permanent state changes
+        logical bugs
+        failed assumptions during audits
+        incorrect data handling
+
+Proof of Concept:
+Storage Reference Behavior
+
+Initial storage:
+
+age = 25
+
+Using:
+
+User storage user = users[msg.sender];
+
+Then:
+
+user.age = 99;
+
+Storage becomes:
+
+age = 99
+
+Permanent blockchain mutation occurs.
+
+Root Cause: 
+            storage variables are references to blockchain state.
+
+            memory variables are temporary isolated copies.
+
+            Developers may incorrectly assume both behave similarly.
+
+
+Recommendation:
+
+Use:
+
+storage
+
+when permanent state modification is intended.
+
+Use:
+
+memory
+
+for temporary calculations or isolated data manipulation.
+*/
+
 //Patched code
 
 contract StorageReference 
