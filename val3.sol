@@ -279,6 +279,38 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Missing Access Control and Zero Address Validation in storeAddress()
+
+Severity: Medium
+
+Reason: Any external user can update the stored address, and the contract allows storing the zero address
+
+Location: Contract: StoreAddressvul
+          Function: storeAddress()
+
+Vulnerability Description: The storeAddress() function allows unrestricted modification of the userAddress
+                           state variable
+
+                           1.No access control mechanism exists
+                           2.The zero address (address(0)) is not validated
+
+Impact: An attacker can:
+        replace the stored address with arbitrary values
+        interntionally set the address to the zero address
+        disrupt protocol functionality dependent on valid addresses
+
+Proof of Concept:
+                Deploy contract
+                Owner stores valid address: storeAddress(0x123.....)
+                Attacker overwrites address: storeAddress(0xABC....)
+
+Root Cause: The function is declared public without authorization checks
+
+Recommendation: owner based access control
+                zero address validation
+
+*/
 
 //patched code
 
