@@ -399,6 +399,55 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+
+/*
+Title: Missing safe array element removal in ArrayStorageval
+
+Severity: Low
+
+Reason: The contract allows adding elements to the array but does not provide a 
+        controlled mechanism to safely remove elements
+
+Location: Contract: ArrayStorageval
+          Function: number array management
+
+Vulnerability Description: The contract supports adding numbers into the storage array:
+
+numbers.push(_number);
+
+However, no function exists to remove elements from the array.
+
+Impact: Lack of safe removal functionality may lead to:
+unnecessary storage growth
+inefficient state management
+increased gas costs
+unexpected transaction failures
+
+Proof of Concept:
+Current Behavior
+Add values:
+addNumber(100)
+addNumber(200)
+addNumber(300)
+
+Current array:
+
+[100, 200, 300]
+
+Root Cause: The contract lacks:
+array cleanup functionality
+empty-array validation before removal
+
+Recommendation: Implement a removeLastNumber() function using:
+
+numbers.pop();
+
+Also validate that the array is not empty before removing elements.
+
+Example: require(numbers.length > 0, "Array is empty");
+
+*/
+
 // patched code
 
 contract ArrayStorage 
