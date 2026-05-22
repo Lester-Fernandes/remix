@@ -384,6 +384,80 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+/*
+Title: Missing Historical State Tracking in Counter Updates
+
+Severity: Low
+
+Reason: The contract updates the counter value without 
+        preserving the previous state or emitting update history events.
+
+Location:
+        Contract: StatePersistenceval
+
+     Functions:
+
+     increment()
+
+     setCounter()
+
+Vulnerability Description:
+
+The contract directly modifies the counter variable:
+
+counter = counter + 1;
+
+and
+
+counter = _value;
+
+without preserving the old value beforehand.
+
+Impact: Without historical state tracking
+        previous values become unrecoverable
+        update history cannot be audited easily
+        monitoring systems cannot track changes efficiently
+        frontend applications lack event-driven updates
+
+Proof of Concept:
+Initial state:
+
+counter = 0
+User calls:
+
+increment()
+Current state:
+
+counter = 1
+User calls:
+
+setCounter(100)
+Current state:
+
+counter = 100
+Previous values 0 and 1 are no longer stored.
+
+No event logs indicate the state transitions.
+
+Root Cause: The contract updates storage variables directly without
+            saving historical state
+            emitting update events
+
+Recommendation:
+
+Before every update:
+
+Save current counter into previousCounter
+Emit an event containing:
+-old value
+-new value
+
+Example:
+
+previousCounter = counter;
+
+emit CounterUpdated(counter, _newValue);
+*/
 
 //Patched code
 
