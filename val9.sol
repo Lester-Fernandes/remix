@@ -512,6 +512,67 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Improper array element deletion creates storage gaps
+
+Severity: Medium
+
+Reason: Using delete numbers[_index] resets the value but does 
+        not shrink the array, leaving empty gaps in storage.
+
+        Location:
+                  Contract: DeleteStorageVariableVul
+                  Function: deleteArrayIndex(uint256 _index)
+
+Vulnerability Description: The contract removes array elements using:
+
+delete numbers[_index];
+
+This operation does NOT remove the element from the array.
+
+Impact: Improper deletion may cause
+inconsistent array data
+invalid iteration logic
+unexpected zero values
+inefficient storage usage
+logical bugs in applications relying on compact arrays
+
+Proof of Concept:
+
+Initial array:
+[10, 20, 30]
+
+Call:
+deleteArrayIndex(1)
+
+Result:
+[10, 0, 30]
+
+Problems:
+array length still equals 3
+index 1 now contains an empty hole
+
+Root Cause: The delete keyword only resets storage values to default values.
+            shift elements
+            reduce array size
+            reorganize array structure
+
+Recommendation: To properly remove elements:
+
+Replace target index with the last array element
+Remove the final element using pop()
+
+Example:
+
+numbers[_index] = numbers[numbers.length - 1];
+
+numbers.pop();
+
+Also validate index bounds before removal.
+
+*/
+
+// Patched code
 contract DeleteStorageVariable 
 {
 
