@@ -365,6 +365,37 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Missing Monotonic Balance Validation in storeValue()
+
+Severity: Medium
+
+Reason: Users can freely decrease previously stored values, allowing unauthorized roolback of state
+
+Location: Contract: UserStorageval
+          Function: storeValue()
+
+Vulnerability Description: The storeValue() function allows users to overwrite their stored balance with 
+                            any arbitrary value: balance[msg.sender] = _amount;
+
+Impact: Allowing balance decreases may cause
+rollback of important user state
+inconsistent accounting behavior
+manipulation of protocol logic
+bypass of progression-based system
+
+Proof of Concept:
+Current state:  storeValue(1000)
+Current state: balances[User] = 1000
+Value reduction succeeds unexpectedly: balance[user] = 10
+
+Root Cause: The contract directly overwrites stored balances without validating whether the
+            new value is greater than the current value
+
+Recommendation: Ensure new values are strictly greater than previous values
+
+*/
+
 //patched code
 contract UserStorage 
 {
