@@ -312,6 +312,43 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+/*
+
+Title: Missing state toggle mechanism in storeBooleanval
+
+Severity: Low
+
+Reason: The contract allows direct booleam assignment but lacks a dedicated mechanism to 
+        safely reverse the current state
+
+Location: 
+Contract: StoreBooleanval
+Function: setStatus()
+
+Vulnerability Descrption: The contract currently allows users to manually set the isActive state variable using
+                          setStatus(bool _status) 
+
+Impact:
+unnecessary external state checks
+inefficient contract interaction
+incorrect manual status updates
+increased forntend complexity
+
+Proof of Concept:
+Initial state: isActive = false
+
+User calls: setStatus(true)
+
+State becomes: isActive = true
+
+Root Cause: The contract only supports direct boolean assignment and does not implement
+            automatic state reversal logic
+
+Recommendation: Implement a toggleStatus() function using boolean negation
+                Example: isActive = !isActive;
+
+*/
+
 //patched code
 contract StoreBoolean 
 {
