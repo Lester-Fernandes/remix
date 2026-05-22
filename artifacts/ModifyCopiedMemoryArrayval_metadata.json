@@ -14,19 +14,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "copyArrayToMemory",
-				"outputs": [
-					{
-						"internalType": "uint256[]",
-						"name": "",
-						"type": "uint256[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "getStorageArray",
 				"outputs": [
 					{
@@ -42,6 +29,11 @@
 				"inputs": [],
 				"name": "modifyMemoryCopy",
 				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
 					{
 						"internalType": "uint256[]",
 						"name": "",
@@ -84,7 +76,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val20.sol": "StorageToMemoryCopyval"
+			"val21.sol": "ModifyCopiedMemoryArrayval"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -98,12 +90,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"val20.sol": {
-			"keccak256": "0xfc7b431bd133cf67e6b5a0933477335cbf786ab419312dc43d61d757202d32c6",
+		"val21.sol": {
+			"keccak256": "0x0319471eb24097cc54deea1cc2a99d1e395945804a56d718569751885d3b4d92",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6a84f34e755572d5cd62cf64bdbd1c3e2aaa05ca21a6752fb023bd852f5a56cc",
-				"dweb:/ipfs/Qmd56iQ2LAxPvemNpRYw9m4KTpyDSJNEhUnTmCLvhyRizo"
+				"bzz-raw://0a4d75f3beaf696322073f92b7284f40cc76e736699d3a61d8b1b4e59b0b58c4",
+				"dweb:/ipfs/QmTGoWpGJVHW7zwinZm9dn7QxpWogQAJp3GCyuJ61mDqwj"
 			]
 		}
 	},
