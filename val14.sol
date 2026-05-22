@@ -376,6 +376,78 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+
+/*
+Title: Missing Access Control and State Change Logging in StateMutationval
+
+Severity: Medium
+
+Reason: Any external user can modify contract state, and state mutations are not logged through events.
+
+Location:
+        Contract: StateMutationval
+Functions:
+        updateValue()
+        increaseValue()
+
+Vulnerability Description:
+
+The contract allows unrestricted state mutation through:
+
+updateValue(uint256 _newValue)
+
+and
+
+increaseValue(uint256 _amount)
+
+Both functions are declared public without access control.
+
+Impact: An attacker can
+- overwrite stored values
+- manipulate protocol logic
+- increase values unexpectedly
+- disrupt application behavior
+
+Proof of Concept:
+Deploy contract.
+User A sets value:
+updateValue(100)
+
+Current state:
+
+value = 100
+Attacker calls:
+increaseValue(1000000)
+
+Current state:
+
+value = 1000100
+
+State mutation succeeds without restriction.
+
+No event logs exist for tracking changes.
+
+Root Cause: The contract lacks
+            owner-based authorization
+            mutation event logging
+            historical value tracking
+
+Recommendation:
+
+Implement:
+
+    Owner-only access control
+    Mutation events
+    Previous value tracking
+
+Example:
+
+require(msg.sender == owner, "Not owner");
+
+and
+
+emit ValueUpdated(oldValue, newValue);
+*/
  
  //Patched code
  
