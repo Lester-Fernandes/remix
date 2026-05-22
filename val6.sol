@@ -375,6 +375,52 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+
+/*
+Title: Single shared struct storage causes user data overwrite
+
+Severity: Medium
+
+Reason: The contract stores all user information inside a single shared stred
+        allowing new users to overwrite existing profile data
+
+Location: Contract: structStorageval
+          Function: storeUser()
+
+Vulnerability Description: The contract stores profile information in a single global
+                            variable  User public user;
+
+Impact: Because only one shared struct exists
+new users overweite previous user data
+profile information is not isolated per account
+data integrity is lost
+user ownership separation does not exist
+
+Proof of Concept
+User A stores profile:
+storeUser("Alice", 25, 0xAAA..., true)
+
+Current stored profile:
+
+Alice
+User B stores profile:
+storeUser("Bob", 30, 0xBBB..., true)
+
+Current stored profile:
+
+Bob
+
+Alice’s data is permanently overwritten.
+
+Root Cause: The contract user a single shared struct variable instead of mapping profiles to 
+            user addresses
+
+Recommendation:
+Use : mapping(address => User)
+to store independent profiles for each user.
+
+*/
+
 //patched code
 
 contract StructStorage 
