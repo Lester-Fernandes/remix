@@ -402,6 +402,50 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+
+Title: Unrestricted Dynamic Array Growth in addMultipleValues()
+
+Severity: Medium
+
+Reason: The contract allows unlimited array expansion without enforcing 
+        a maximum storage limit.
+
+        Location:
+                Contract: DynamicArrayGrowthval
+                Function: addMultipleValues()
+
+Vulnerability Description: The addMultipleValues() function continuously 
+appends new values into the numbers array:
+
+numbers.push(_value1);
+numbers.push(_value2);
+numbers.push(_value3);
+
+No maximum length restriction exists.
+
+Impact: Unlimited storage expansion may lead to:
+excessive gas consumption
+inefficient contract interaction
+denial-of-service risk due to large arrays
+increased blockchain storage costs
+
+Proof of Concept:
+User repeatedly calls:
+addMultipleValues(1, 2, 3)
+Array length continuously increases:
+3 → 6 → 9 → 12 → ...
+No restriction prevents further growth.
+
+Root Cause: The contract does not validate the current array size before inserting new elements.
+
+No storage cap exists.
+
+Recommendation: Restrict maximum array length before adding new elements.
+
+Example: require(numbers.length < 10, "Max limit reached");
+*/
+
 //patched code
 
 contract DynamicArrayGrowth 

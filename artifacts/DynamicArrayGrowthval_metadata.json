@@ -108,11 +108,11 @@
 	},
 	"sources": {
 		"val8.sol": {
-			"keccak256": "0x32a3323aa14cce9ea756da55cefc369ad9e2ce6415216e92ac7c47ea5b121201",
+			"keccak256": "0x0598ef071d095e795ed707da8091a2b527e469ed63aee88c3c90097b336d6a0b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3b93987817031a6e3842dd127823f32878530d838f79749d1b78732b128409c1",
-				"dweb:/ipfs/QmdrP27v1xiLiw8JHsGRwv1z4Aega4RLtNzpEXzR1ryRrz"
+				"bzz-raw://8f0a9799cf4cee9b0d10fda2874e29aca464e3e3c491855afe62eef1c32a6300",
+				"dweb:/ipfs/QmZJ48ZM5vt483yu9xnvLEBACwsCsgsbs1QaM2xvxAuD2m"
 			]
 		}
 	},
