@@ -372,6 +372,65 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+/*
+Title: Missing Access Control in Whitelist Deletion Mechanism
+
+Severity: Medium
+
+Reason: Whitelist entries can be modified or deleted without centralized authorization control.
+
+Location:
+        Contract: DeleteMappingEntryval
+        Function: deleteMyBalance()
+
+Vulnerability Description:
+
+The original contract uses
+
+mapping(address => uint256) public balances;
+
+and allows users to delete their own entries using:
+
+delete balances[msg.sender];
+
+When converting this logic into a whitelist system using:
+
+mapping(address => bool)
+
+improper access control may allow unauthorized modification or removal of whitelist entries.
+
+Impact: Without owner-only restrictions:
+
+users may remove themselves unexpectedly
+malicious users may manipulate whitelist logic
+protected protocol operations may fail
+authorization systems become unreliable
+
+Proof of Concept:
+Owner whitelists user:
+addToWhitelist(userAddress)
+User removes whitelist status:
+removeFromWhitelist(userAddress)
+User loses access immediately.
+
+Without access control, whitelist integrity becomes weak.
+
+Root Cause: The contract lacks administrative authorization checks for whitelist deletion operations.
+
+Additionally, the original mapping design was intended for balances rather than access management.
+
+Recommendation:
+
+Implement:
+
+mapping(address => bool) for whitelist tracking
+owner-only access control
+dedicated whitelist add/remove functions
+
+Example: require(msg.sender == owner, "Not owner");
+
+*/
+
 //Patched code
 
 contract DeleteMappingEntry 
