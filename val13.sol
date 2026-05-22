@@ -366,6 +366,65 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+
+/*
+Title: Missing Deployment Metadata Tracking in DeploymentResetval
+
+Severity: Low
+
+Reason: The contract does not record important deployment metadata such as deployer identity and deployment timestamp.
+
+Location:
+        Contract: DeploymentResetval
+        Constructor: Missing
+
+
+Vulnerability Description:
+
+The contract stores and updates a numeric value but does not preserve any information about:
+
+-who deployed the contract
+-when the contract was deployed
+
+Without deployment metadata:
+
+-ownership origin cannot be verified
+-deployment timing cannot be audited
+-administrative traceability is reduced
+
+This weakens transparency and accountability for contract lifecycle management.
+
+Impact: Lack of deployment metadata may cause
+        inability to identify original deployer
+        reduced auditability
+        weaker administrative tracking
+        difficulty debugging deployment-related issues
+
+Proof of Concept:
+    Deploy contract.
+    Query available state:
+number
+    Missing information:
+    deployer address unavailable
+    deployment timestamp unavailable
+
+    No on-chain deployment metadata exists.
+
+Root Cause: The contract does not define
+- an owner or deployer variable
+- a constructor for initialization
+- a timestamp tracking variable
+
+Recommendation:
+Store deployment metadata during contract creation using:
+
+msg.sender
+and
+
+block.timestamp
+inside the constructor.
+*/
+
 //Patched code
 
 contract DeploymentReset 
