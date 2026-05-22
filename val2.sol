@@ -277,6 +277,41 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+
+/*
+Title: Missing Historical State Preservation in updateNumber()
+
+Severity: Low
+
+Reason: The contract overwrites the stored value without preserving the previous state
+
+Location: Contract: stateOverWritevul
+          Function: updateNumber()
+
+Vulnerability Description: The updateNumber() function directly update the number variable.
+                            This causes the old value to be permanently lost after every update
+
+Impact: Without preserving the previous value:
+        historical state changes cannot be audited
+        debugging becomes difficult
+        accidental overwrites cannot be traced
+        previous protocol configureations become unrecoverable
+
+Proof of Concept
+- Deploy the contract
+call: updateNumber(100
+Current state: number = 100
+Call: updateNumber(500)
+Current State: number = 500 Previous value 100 is lost permanently
+
+Root Cause: The contract updates the storage variable directly without first storing the old value in another variable
+
+Recommendation: Before updating number store its old value inside another sate variable
+
+Example: previousNumber = number;
+number = _newNumber;
+*/
+
 //patched code
 contract StateOverwrite 
 {
