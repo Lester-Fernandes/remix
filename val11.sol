@@ -403,6 +403,79 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Improper Sparse Array Deletion Leaves Empty Gaps
+
+Severity: Medium
+
+Reason:Using delete numbers[_index] resets the value to zero but does not remove the 
+       array element or reduce array length.
+
+Location:
+        Contract: SparseArrayBehavior
+        Function: deleteItem(uint256 _index)
+
+Vulnerability Description:
+
+The contract removes array elements using:
+
+delete numbers[_index];
+
+This operation only resets the selected value to its default value (0) and does not:
+
+shift remaining elements
+reduce array size
+fully remove the entry
+
+Impact: Sparse arrays may cause
+inconsistent iteration results
+incorrect business logic
+unexpected zero values
+inefficient storage usage
+frontend parsing issues
+
+Proof of Concept:
+Add values:
+
+addNumber(10)
+addNumber(20)
+addNumber(30)
+addNumber(40)
+Current array:
+
+[10, 20, 30, 40]
+Call:
+
+deleteItem(1)
+Result:
+
+[10, 0, 30, 40]
+Problems:
+
+index hole remains
+
+array length still equals 4
+
+Root Cause: The delete keyword resets storage values but does not
+             reorganize dynamic array structure.
+
+No shifting or shrinking logic exists.
+
+Recommendation: To fully remove an item:
+
+Shift all later elements left
+
+Remove the last duplicate element using pop()
+
+Example:
+for (uint256 i = _index; i < numbers.length - 1; i++) {
+    numbers[i] = numbers[i + 1];
+}
+
+numbers.pop();
+Also validate array bounds before deletion.
+*/
+
 //Patched code
 
 contract SparseArrayBehaviorval 
