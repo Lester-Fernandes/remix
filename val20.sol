@@ -438,6 +438,81 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+/*
+Title: Understanding storage references vs memory copies in array manipulation
+
+Severity: Low 
+
+Reason: Developers may mistakenly assume memory copies and storage references behave identically during array modification
+
+Location: 
+Contract: StorageToMemoryCopyval
+Functions:
+copyArrayToMemory()
+modifyMemoryCopy()
+
+Vulnerability Description: The contract demonstrates copying a storage array into memory:
+
+uint256[] memory tempArray = numbers;
+
+This creates an independent temporary copy.
+
+Changes made to the memory array:
+
+tempArray[0] = 999;
+
+do NOT affect the original storage array.
+
+However, Solidity also supports storage references:
+
+uint256[] storage tempArray = numbers;
+
+A storage reference acts as a direct pointer to blockchain storage.
+
+Impact: Incorrect use of storage references may cause
+- unintended permanent state changes
+- Logical bugs
+- accidental storage corruption
+- inefficient contract design
+
+Proof of Concept: Memory Copy Behavior
+
+Initial storage array:
+
+[10, 20, 30]
+
+Using:
+
+uint256[] memory tempArray = numbers;
+
+Then:
+
+tempArray[0] = 999;
+
+Results:
+
+Memory Array  = [999,20,30]
+Storage Array = [10,20,30]
+
+Storage remains unchanged.
+
+Root Cause: Developers may confuse
+- insependent memory copies
+- direct storage references
+
+Recommendation:
+Use:
+
+memory
+
+for temporary isolated data processing.
+
+Use:
+
+storage
+
+only when permanent state mutation is intended.
+*/
 
 //Patched code
 
