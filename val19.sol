@@ -426,6 +426,67 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+/*
+Title: Understanding mutable memory arrays vs persistent storage arrays
+
+Severity: Low
+
+Reason: Developers may incorrectly assume modifications to memory arrays permanently affect blockchain storage
+
+Location: 
+Contract: ModifyMemoryArrayval
+Functions:
+createAndModifyArray()
+modifyInputArray()
+
+Vulnerability Description: The contract demonstrates that memory arrays are mutable:
+
+tempArray[1] = 999;
+
+and
+
+_numbers[0] = 777;
+
+However, these modifications occur only in temporary memory and do NOT persist on-chain.
+
+Impact: Misunderstanding memory vs storage behavior may cause:
+- Incorrect state assumptions
+- failed business logic
+- accidental storage mutations
+- ineffcient contract design
+
+Proof of Concept: Memory Array Modification
+
+Initial array:
+
+[1, 2, 3]
+
+Loop modification:
+
+for (uint256 i = 0; i < array.length; i++) {
+    array[i] = array[i] * 2;
+}
+
+Result:
+
+[2, 4, 6]
+
+Characteristics:
+
+temporary only
+no blockchain persistence
+lower gas usage
+
+Root Cause: Developers may not fully understand the lifecycle differences between:
+- memory arrays
+- storage arrays
+
+Recommendation: Use memory arrays for
+- temporary calculations
+- loop-based processing
+- intermediate computations
+
+*/
 
 //Patched code
 
