@@ -421,6 +421,53 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Inefficient Storage Usage vs Temporary Local Variable Computation
+
+Severity: Low
+
+Reason: Storage writes consume significantly more gas than temporary local computation
+
+Location:
+        Contract: LocalUintVariableval
+        Function: StoreCalculatedValue()
+                  Local Variable handling
+
+Vulnerability Description: The contract demonstrates the use of local variables:
+
+uint256 result = _x + _y;
+
+Local variables exist only during function execution and are not permanently stored on-chain.
+
+However, writing computed values into storage:
+
+storedValue = result;
+
+causes permanent blockchain state modification, which consumes significantly more gas.
+
+Impact:Unnecessary storage writes may cause
+- higher transaction costs
+- inefficient contract execution
+- excessive blockchain storage usage
+- scalability problems
+
+Proof of Concept: Local Variable Computation
+uint256 multiplication = _a * _b;
+
+Characteristics:
+
+temporary
+memory/local stack only
+low gas usage
+no blockchain state change
+
+Root Cause: Developer may incorrectly store temporary computation results permanently even when storage persistence is unnecessary.
+
+Recommendation: Use local variables whenever persistence is not required.
+                Avoid storage writes for temporary calculations.
+
+*/
+
 //Patched code
 
 contract LocalUintVariable 
