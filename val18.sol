@@ -439,6 +439,71 @@ IMPORTANT CONCEPTS LEARNED
 
 =========================================================
 */
+/*
+Title: Efficient Temporary Computation using memory arrays instead of storage arrays
+
+Severity: Low
+
+Reason: Memory arrays are significantly more gas efficient for temporary calculations compared to permanent storage arrays
+
+Location: 
+Contract: MemoryArrayval
+Functions:
+createMemoryArray()
+calculateSquares()
+storeValue()
+
+Vulnerability Description: The contract demonstrates temporary memory arrays:
+uint256[] memory tempArray =
+    new uint256[](3);
+
+Memory arrays:
+
+exist only during execution
+do not persist on-chain
+are cheaper than storage writes
+
+However, developers may incorrectly use storage arrays for temporary computations, causing unnecessary gas costs and permanent blockchain storage growth.
+
+The contract should demonstrate:
+
+larger dynamic memory allocation
+loop-based memory population
+multiplied value generation without storage mutation
+
+Impact: Improper use of storage arrays for temporary calculations may cause:
+- excessive gas consumption
+- permanent storage bloat
+- inefficient contract execution
+- scalability problems
+
+Proof of Concept:
+Memory Array Example
+uint256[] memory values =
+    new uint256[](5);
+
+Using loop:
+
+for (uint256 i = 0; i < 5; i++) {
+    values[i] = _number * (i + 1);
+}
+
+Characteristics:
+
+temporary execution data
+lower gas usage
+no permanent storage writes
+
+Root Cause:Developers may misunderstand the lifecycle and gas differences between:
+            temporary memory arrays
+            permanent storage arrays
+
+Recommendation:Use memory arrays when:
+values are temporary
+persistence is unnecessary
+calculations occur during execution only
+
+*/
 
 //Patched code
 
