@@ -427,6 +427,82 @@ IMPORTANT CONCEPTS LEARNED
 =========================================================
 */
 
+/*
+Title: Understanding Memory Array Lifecycle vs Permanent Storage Arrays
+
+Severity: Low
+
+Reason: Developers may incorrectly assume memory arrays behave like persistent storage arrays.
+
+Location:
+        Contract: MemoryLifecycleval
+        Functions:
+        createMemoryVariable()
+        copyStorageToMemory()
+
+Vulnerability Description:
+
+The contract demonstrates temporary memory usage for variables and strings.
+
+However, Solidity arrays also support two important data locations:
+
+memory
+storage
+
+A memory array:
+
+exists temporarily during function execution
+disappears after execution finishes
+does not persist on blockchain storage
+
+Example:
+
+uint256[] memory tempArray = new uint256[](3);
+
+In contrast, storage arrays:
+
+persist permanently on-chain
+consume storage gas
+directly modify blockchain state
+
+Impact: Improper understanding of memory arrays may cause:
+- accidental permanent state changes
+- inefficient gas usage
+- incorrect assumptions during audits
+- logical storage bugs
+
+Proof of concept: Memory Array Behavior
+uint256[] memory tempArray = new uint256[](3);
+
+Values stored:
+
+tempArray[0] = 10;
+tempArray[1] = 20;
+tempArray[2] = 30;
+
+Characteristics:
+
+temporary only
+removed after execution
+does not affect blockchain storage
+
+Root Cause: Developers may confuse temporary memory allocation with persistent storage allocation
+
+Recommendatation:
+Use:
+
+memory
+
+for temporary arrays and calculations.
+
+Use:
+
+storage
+
+only when persistence is required.
+
+*/
+
 //Patched code
 
 contract MemoryLifecycle 
