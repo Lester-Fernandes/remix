@@ -1,0 +1,160 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "createAndModifyMemoryStruct",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createMemoryStruct",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "modifierMemoryCopy",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "memoryname",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "memoryAge",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "memoryActive",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "storageeName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "storageAge",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "storageActive",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "storeUser",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "storedUser",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "active",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"val22.sol": "MemoryStructExample"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"val22.sol": {
+			"keccak256": "0x19c768b844beeefd9b8a8b27ee9c5e23a294ebff47f3ec900dce8c2b8aef5b28",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fc791f575f85e3792dcba9f275de26ad5c1ef2c5043058a536d22014fd11828b",
+				"dweb:/ipfs/Qmbfe2TGHfxNrcmZYpPxocvYuGaStch47ndKksaJvGHosf"
+			]
+		}
+	},
+	"version": 1
+}
