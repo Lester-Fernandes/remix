@@ -6,19 +6,28 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"name": "AmountTooLarge",
-				"type": "error"
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
-				"inputs": [],
-				"name": "InsufficientBalance",
-				"type": "error"
-			},
-			{
-				"inputs": [],
-				"name": "TransferFailed",
-				"type": "error"
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_amt",
+						"type": "uint256"
+					}
+				],
+				"name": "badExecution",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -43,62 +52,26 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
-				"name": "deposit",
+				"name": "safeExecution",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "getMyBalance",
+				"name": "token",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "contract SimpleContract",
 						"name": "",
-						"type": "uint256"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "globalCounter",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "recipient",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "safeTokenTransfer",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -130,11 +103,11 @@
 	},
 	"sources": {
 		"val38.sol": {
-			"keccak256": "0x27a31e3eaedab31a1d3ff6fb8b408b58bb13bfa4b1bea8190937ab23975f1b80",
+			"keccak256": "0xe061413c31ebcdf25a285196d79b38daa4ff4f4d7021c1c452a2fbb99c78e538",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://97e083fdc0b398b00b9885430a96c8a6fb537e5b179d6ccbfaca540ae662ea9e",
-				"dweb:/ipfs/Qmep66qWUsGuKzyZFxEoQZgHiZrbrYmo18nAEdNj6unp5f"
+				"bzz-raw://b41fea17be5a81c9bcadfc342bcc16f8f4acd810e3b86502bccea6695129277f",
+				"dweb:/ipfs/QmZX5ByDBbZBm9kZFS5CDv8edMVhQFRe78sAZSvi17uwce"
 			]
 		}
 	},

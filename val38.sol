@@ -505,119 +505,38 @@ IMPORTANT CONCEPTS LEARNED
 */
 
 /*
-Title: Violation of Checks-Effects-Interactions (CEI) pattern in external tocken transfer logic
+Title: Unlimited Token Minting
 
 Severity: High
 
-Reason: External calls are executed before validation, which can cause unexpected behavior and increase attack suface. Although a revert
-        rolls back state changes within the same transaction, the contract follows an unsafe execution pattern
+Description: The mint() function can be called by any address.
+function mint(address _to,uint256 _amt) external {
+    balances[_to] = balances[_to] + _amt;
+}
+Impact:
+- Infinite token creation
+- Supply manipulation
+- Loss of token integrity
 
-Location: Contract: TransactionAtomicity
-          Function: transferAndRevert()
+Recommendation:
+Restrict minting:
 
-Vulnerability Description: the transferAndRevert() function performs an external tocken transfer before executing a validation check.
-Example vulnerable flow:
-function transferAndRevert(
-    address token,
-    address recipient,
-    uint256 amount
-)
-    external
-{
-    IERC20(token).transfer(
-        recipient,
-        amount
-    );
+address public owner;
 
-    require(
-        amount <= 100,
-        "Amount too large"
-    );
+modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
 }
 
-The contract interacts with an external token contract before performing all required checks.
-
-This violates the Checks → Effects → Interactions security pattern.
-
-Impact: Potential consequences include:
-- Unnecessary gas consumption
-- Increased attack surface
-- Reentrancy risk when interacting with malicious contracts
-- Complex transaction behavior that is harder to audit
-If the external contains contains unexpected logic, execution may behave differently that intended
-
-Proof of Concept:
-
-Scenario
-Deploy the contract.
-Call:
-transferAndRevert(
-    tokenAddress,
-    recipientAddress,
-    500
-);
-Execution flow:
-Step 1:
-External token transfer executes
-
-Step 2:
-require(amount <= 100)
-
-Step 3:
-Condition fails
-
-Step 4:
-Transaction reverts
-Entire transaction rolls back.
-
-Result:
-
-globalCounter unchanged
-balances unchanged
-token transfer reverted
-
-Root Cause: The contract performs an external interaction before completing validation.
-
-IERC20(token).transfer(
-    recipient,
-    amount
-);
-
-require(
-    amount <= 100,
-    "Amount too large"
-);
-
-Security best practice requires:
-
-Checks
-→ Effects
-→ Interactions
-
-Recommendation: Follow the CEI pattern
-1. Validate inputs first 
-2. Update internal sate
-3. Perform external interactions last
-Also verify transfer success
-
-Example:
-require(
-    amount <= 100,
-    "Amount too large"
-);
-
-balances[msg.sender] -= amount;
-
-bool success =
-    IERC20(token).transfer(
-        recipient,
-        amount
-    );
-
-require(
-    success,
-    "Transfer failed"
-);
+function mint(
+    address _to,
+    uint256 _amt
+)
+    external
+    onlyOwner
+{
+    balances[_to] += _amt;
+}
 
 */
 // Patched code

@@ -27,38 +27,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "brokenExecution",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "globalCounter",
-				"outputs": [
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "_amt",
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "safeExecution",
+				"name": "mint",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -77,7 +56,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val38.sol": "TransactionAtomicityval"
+			"val38.sol": "SimpleContract"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
