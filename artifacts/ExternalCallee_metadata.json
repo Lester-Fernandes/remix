@@ -1,0 +1,72 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "callCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "externalWork",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"val66.sol": "ExternalCallee"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"val66.sol": {
+			"keccak256": "0x7fd61b94f1550577ff19c44056e2383e9064d9995298a8256b18bdec5d684440",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bf68d797603b0315d6dc60118743e8cfa0a831e27525859a9b29dd4dce129283",
+				"dweb:/ipfs/QmTGLHoQF9WoBqgHXHUpYjnU9iGkQyyyeNp2LgBTDkQRN2"
+			]
+		}
+	},
+	"version": 1
+}
