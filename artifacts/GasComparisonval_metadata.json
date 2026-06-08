@@ -121,7 +121,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val68.sol": "GasComparisonval"
+			"val69.sol": "GasComparisonval"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -135,7 +135,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"val68.sol": {
+		"val69.sol": {
 			"keccak256": "0x73c9c1dafdbcf511651eaf69ed5c997b01993e8c002dd395c0b7641fd6ecd7e5",
 			"license": "MIT",
 			"urls": [
