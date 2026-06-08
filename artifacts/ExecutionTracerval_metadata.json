@@ -17,28 +17,34 @@
 				"type": "constructor"
 			},
 			{
-				"anonymous": false,
-				"inputs": [
+				"inputs": [],
+				"name": "executionStage",
+				"outputs": [
 					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "counter",
-						"type": "uint256"
+						"internalType": "string",
+						"name": "",
+						"type": "string"
 					}
 				],
-				"name": "AttackTriggered",
-				"type": "event"
-			},
-			{
-				"inputs": [],
-				"name": "attack",
-				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "attackCounter",
+				"name": "lastObservedSender",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "localCounter",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -54,7 +60,7 @@
 				"name": "target",
 				"outputs": [
 					{
-						"internalType": "contract ExecutionTracer",
+						"internalType": "contract ExternalTarget",
 						"name": "",
 						"type": "address"
 					}
@@ -63,8 +69,11 @@
 				"type": "function"
 			},
 			{
-				"stateMutability": "payable",
-				"type": "receive"
+				"inputs": [],
+				"name": "traceExecution",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -80,7 +89,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val65.sol": "MaliciousCallback"
+			"val65.sol": "ExecutionTracerval"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},

@@ -6,39 +6,59 @@
 	"output": {
 		"abi": [
 			{
+				"anonymous": false,
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "_target",
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
 						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"name": "ETHReceived",
+				"type": "event"
 			},
 			{
 				"anonymous": false,
 				"inputs": [
 					{
 						"indexed": false,
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
 						"internalType": "uint256",
-						"name": "counter",
+						"name": "value",
 						"type": "uint256"
 					}
 				],
-				"name": "AttackTriggered",
+				"name": "TargetExecuted",
 				"type": "event"
 			},
 			{
 				"inputs": [],
-				"name": "attack",
-				"outputs": [],
-				"stateMutability": "payable",
+				"name": "currentStage",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "attackCounter",
+				"name": "executionCounter",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -51,12 +71,39 @@
 			},
 			{
 				"inputs": [],
-				"name": "target",
+				"name": "failFunction",
+				"outputs": [],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lastCaller",
 				"outputs": [
 					{
-						"internalType": "contract ExecutionTracer",
+						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "targetFunction",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalETHReceived",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -80,7 +127,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val65.sol": "MaliciousCallback"
+			"val65.sol": "ExternalTarget"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
