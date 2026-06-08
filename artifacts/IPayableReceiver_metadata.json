@@ -7,59 +7,7 @@
 		"abi": [
 			{
 				"inputs": [],
-				"name": "contractBalance",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
-					}
-				],
-				"name": "dangerousSend",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "lastSuccess",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
-					}
-				],
-				"name": "sendETH",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalSent",
+				"name": "getBalance",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -84,7 +32,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val64.sol": "ETHSenderval"
+			"val64.sol": "IPayableReceiver"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
