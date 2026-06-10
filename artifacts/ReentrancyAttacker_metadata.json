@@ -9,7 +9,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_target",
+						"name": "_bank",
 						"type": "address"
 					}
 				],
@@ -17,15 +17,19 @@
 				"type": "constructor"
 			},
 			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
 				"inputs": [],
 				"name": "attack",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "attackCounter",
+				"name": "attackAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -38,9 +42,41 @@
 			},
 			{
 				"inputs": [],
-				"name": "depositToBank",
-				"outputs": [],
-				"stateMutability": "payable",
+				"name": "attacking",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "bank",
+				"outputs": [
+					{
+						"internalType": "contract IVulnerableBank",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -58,27 +94,10 @@
 			},
 			{
 				"inputs": [],
-				"name": "target",
-				"outputs": [
-					{
-						"internalType": "contract SecureBank",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdrawLoot",
+				"name": "withdrawStolen",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -94,7 +113,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val78.sol": "ReentrancyAttacker"
+			"val77.sol": "ReentrancyAttacker"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -108,12 +127,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"val78.sol": {
-			"keccak256": "0x994cbeabd130299e8d6de0b51f6a2982916ab73306d8aaa07e558d16cee4481d",
+		"val77.sol": {
+			"keccak256": "0x1c1045daf7bcd2c6a935e38bcd94180aba6bb99777a180197f40ec292bf30fd8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://db443a79821824663c9545bfef42ada05f62f5eebab8ea14b4a61b651957508c",
-				"dweb:/ipfs/QmZwrkfQESK3FFuZghpcsiFi63T959oV3u41TRBEQegiwW"
+				"bzz-raw://3c84c66fd1c6944961a908e944c9dcd07cdfa4b8a2181958fc5cf2b024cd5a0e",
+				"dweb:/ipfs/QmfQShDvRbkFdv9CAWKMhpejsFT5XYt7mjixcoAkvBoR9J"
 			]
 		}
 	},

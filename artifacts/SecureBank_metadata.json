@@ -9,6 +9,19 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "attacker",
+						"type": "address"
+					}
+				],
+				"name": "AttackBlocked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "user",
@@ -22,19 +35,6 @@
 					}
 				],
 				"name": "Deposit",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "attacker",
-						"type": "address"
-					}
-				],
-				"name": "ReentrancyBlocked",
 				"type": "event"
 			},
 			{
@@ -64,7 +64,7 @@
 						"type": "address"
 					}
 				],
-				"name": "balance",
+				"name": "balances",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -103,7 +103,7 @@
 						"type": "address"
 					}
 				],
-				"name": "gatBalance",
+				"name": "getBalance",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -141,7 +141,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val76.sol": "SecureBank"
+			"val77.sol": "SecureBank"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -155,12 +155,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"val76.sol": {
-			"keccak256": "0xd8d9cd0206a86ab0894a03123ba91faf736faf2f35dfd74481bbd22119b11adf",
+		"val77.sol": {
+			"keccak256": "0x964de2cd6addcd729108f73ad29826153b5bccb495eb92a5b3bda361a7875519",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d35d18524ba3865d7e88649409c022cf6fe42bcc67fec70889b7f9bb5ad9c675",
-				"dweb:/ipfs/QmTiv2FDmTNbsjYKjY5Wmx71MX5qNgHS7nuVRBSv696yHk"
+				"bzz-raw://bc49fbccc068172100cfa98781bd012b6f684a14da6f8018433f21324363bb4b",
+				"dweb:/ipfs/QmS2akmagddY5bAp3BFCU6PHkgEQZTSeWDLnYANcQjkuZc"
 			]
 		}
 	},
