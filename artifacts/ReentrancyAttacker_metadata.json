@@ -17,58 +17,6 @@
 				"type": "constructor"
 			},
 			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "attacker",
-						"type": "address"
-					}
-				],
-				"name": "AttackStarted",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "LootWithdrawn",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "attackNumber",
-						"type": "uint256"
-					}
-				],
-				"name": "Reentered",
-				"type": "event"
-			},
-			{
-				"inputs": [],
-				"name": "MAX_ATTACKS",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "attack",
 				"outputs": [],
@@ -90,7 +38,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "depositToTarget",
+				"name": "depositToBank",
 				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
@@ -113,7 +61,7 @@
 				"name": "target",
 				"outputs": [
 					{
-						"internalType": "contract VulnerableBank",
+						"internalType": "contract SecureBank",
 						"name": "",
 						"type": "address"
 					}
@@ -146,7 +94,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val57.sol": "ReentrancyAttacker"
+			"val78.sol": "ReentrancyAttacker"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -160,12 +108,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"val57.sol": {
-			"keccak256": "0x88eb788536be829a70cdc90eb6ab1d5ab15d2612f4fec2b9c84ed15115b951d3",
+		"val78.sol": {
+			"keccak256": "0xdb58d38ab22028685ab57fac4d722b614c465d842d2536d46ddfad00acc536dc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://06eeba0b43b01a5a35e0d88cc1fb9d4ef2b98898db87eeafa41f646f3cf7830a",
-				"dweb:/ipfs/QmURtUyo8gUGxwf5TcCWcwEKa9WoM7xcCHX2uyZ2ftkjSh"
+				"bzz-raw://21bd787ba6de47f11c4daf96885dac3d8d6245e4d50f635ea3b7a43093863b4b",
+				"dweb:/ipfs/QmVRrzD8RH1AhvkxZRqirkJSAzxqpHUSP94A3KfpnYs5Wq"
 			]
 		}
 	},
