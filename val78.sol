@@ -34,70 +34,70 @@ SECURE BANK CONTRACT
 =========================================================
 */
 
-contract SecureBankval {
+// contract SecureBankval {
 
-    /*
-        USER BALANCES
-    */
-    mapping(address => uint256) public balance;
+//     /*
+//         USER BALANCES
+//     */
+//     mapping(address => uint256) public balance;
 
-    /*
-    =====================================================
-    DEPOSIT ETH
-    =====================================================
-    */
+//     /*
+//     =====================================================
+//     DEPOSIT ETH
+//     =====================================================
+//     */
 
-    function deposit() external payable {
-        balance[msg.sender] += msg.value;
-    }
+//     function deposit() external payable {
+//         balance[msg.sender] += msg.value;
+//     }
 
-    /*
-    =====================================================
-    SECURE WITHDRAW (FIXED)
-    =====================================================
-    */
+//     /*
+//     =====================================================
+//     SECURE WITHDRAW (FIXED)
+//     =====================================================
+//     */
 
-    function withdraw(uint256 amount) external {
+//     function withdraw(uint256 amount) external {
 
-        /*
-        =================================================
-        1. CHECKS
-        =================================================
-        */
-        require(balance[msg.sender] >= amount, "Insufficient balance");
+//         /*
+//         =================================================
+//         1. CHECKS
+//         =================================================
+//         */
+//         require(balance[msg.sender] >= amount, "Insufficient balance");
 
-        /*
-        =================================================
-        2. EFFECTS (STATE UPDATE FIRST) ✅ FIX
-        =================================================
-        */
+//         /*
+//         =================================================
+//         2. EFFECTS (STATE UPDATE FIRST) ✅ FIX
+//         =================================================
+//         */
 
-        balance[msg.sender] -= amount;
+//         balance[msg.sender] -= amount;
 
-        /*
-        =================================================
-        3. INTERACTIONS (EXTERNAL CALL LAST)
-        =================================================
-        */
+//         /*
+//         =================================================
+//         3. INTERACTIONS (EXTERNAL CALL LAST)
+//         =================================================
+//         */
 
-        (bool success, ) = msg.sender.call{value: amount}("");
-        require(success, "Transfer failed");
-    }
+//         (bool success, ) = msg.sender.call{value: amount}("");
+//         require(success, "Transfer failed");
+//     }
 
-    /*
-    =====================================================
-    VIEW BALANCE
-    =====================================================
-    */
+//     /*
+//     =====================================================
+//     VIEW BALANCE
+//     =====================================================
+//     */
 
-    function getBalance(address user)
-        external
-        view
-        returns (uint256)
-    {
-        return balance[user];
-    }
-}
+//     function getBalance(address user)
+//         external
+//         view
+//         returns (uint256)
+//     {
+//         return balance[user];
+//     }
+// }
 /*
 Title: Reentrancy Vulnerability Fixed Using Checks-Effects-Interactions and Reentrancy Guard
 
@@ -181,19 +181,11 @@ contract SecureBank {
     =====================================================
     */
 
-    event Deposit(
-        address indexed user,
-        uint256 amount
-    );
+    event Deposit(address indexed user,uint256 amount);
 
-    event Withdraw(
-        address indexed user,
-        uint256 amount
-    );
+    event Withdraw(address indexed user,uint256 amount);
 
-    event AttackBlocked(
-        address attacker
-    );
+    event AttackBlocked( address attacker);
 
     /*
     =====================================================
@@ -208,9 +200,7 @@ contract SecureBank {
             "Reentrant call detected"
         );
 
-        locked = true;
-
-        _;
+        locked = true; _;
 
         locked = false;
     }
