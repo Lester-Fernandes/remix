@@ -37,7 +37,7 @@ IMPLEMENTATION CONTRACT (LOGIC V1)
 =========================================================
 */
 
-contract LogicV1 {
+contract LogicV1val {
 
     /*
         NOTE:
@@ -62,7 +62,7 @@ IMPLEMENTATION CONTRACT (LOGIC V2 - UPGRADE)
 =========================================================
 */
 
-contract LogicV2 {
+contract LogicV2val {
 
     /*
         MUST match storage layout of V1
@@ -86,7 +86,7 @@ PROXY CONTRACT (STORAGE OWNER)
 =========================================================
 */
 
-contract SimpleProxy {
+contract SimpleProxyval {
 
     /*
         STORAGE LAYOUT
@@ -268,3 +268,349 @@ KEY TAKEAWAYS
 
 =========================================================
 */
+/*
+Title:Upgradeable proxy architecture using delegatecall()
+
+Seveerity: High 
+
+Reason: The contract implements a minimal upgradeable proxy architecture using delegatecall().
+
+This pattern allows:
+- upgrading logic contracts
+- preserving proxy storage
+- separating logic from state
+
+Location: Contracts: LogicV1
+                     LogicV2
+                     SimpleProxy
+          Critical Function: _delegate()
+
+Vnlnerability Description: The proxy uses raw assembly based delegatecall() forwarding
+let result := delegatecall(
+    gas(),
+    impl,
+    0,
+    calldatasize(),
+    0,
+    0
+)
+
+This architecture is powerful but dangerous.
+
+Any implementation contract executed through delegatecall() gains full write access to proxy storage.
+
+Impact: 
+Calling: setValue()
+
+through proxy overwrites: implementation
+
+Calling: initialize()
+
+overwrites: admin
+
+This may lead to:
+- proxy takeover
+- malicious upgrades
+- permanent protocol compromise
+- delegatecall hijacking
+- denial of service
+
+Proof of Concept:
+Step 1 — Deploy LogicV1
+Step 2 — Deploy SimpleProxy
+
+Constructor sets:
+
+implementation = logicV1
+admin = deployer
+Step 3 — Call Proxy
+setValue(999)
+
+via proxy ABI.
+
+Result
+
+Inside proxy storage:
+
+implementation = address(uint160(999))
+
+Proxy implementation becomes corrupted.
+
+Step 4 — Call
+initialize(attacker)
+Result
+admin = attacker
+
+Attacker becomes proxy admin.
+
+Root Cause: The vulnerability exists because:
+- proxy storage layout differs from logic layout
+- delegatecall writes into proxy storage
+- no EIP-1967 storage slot separation used
+- raw delegatecall forwarding implemented
+- upgrade safety check missing
+
+*/
+
+// PATCHED CODE
+
+/*
+=========================================================
+SAFE LOGIC V1
+=========================================================
+*/
+
+contract LogicV1 {
+
+    /*
+        STORAGE LAYOUT
+        MUST MATCH PROXY
+    */
+
+    uint256 public value;
+    address public owner;
+
+    bool internal initialized;
+
+    event ValueUpdated(uint256 value);
+
+    function initialize(
+        address _owner
+    )
+        external
+    {
+
+        require(
+            !initialized,
+            "Already initialized"
+        );
+
+        owner = _owner;
+
+        initialized = true;
+    }
+
+    function setValue(
+        uint256 _value
+    )
+        external
+    {
+
+        value = _value;
+
+        emit ValueUpdated(
+            _value
+        );
+    }
+}
+
+/*
+=========================================================
+SAFE LOGIC V2
+=========================================================
+*/
+
+contract LogicV2 {
+
+    uint256 public value;
+    address public owner;
+
+    bool internal initialized;
+
+    event ValueUpdated(uint256 value);
+
+    function setValue(
+        uint256 _value
+    )
+        external
+    {
+
+        value = _value * 2;
+
+        emit ValueUpdated(
+            value
+        );
+    }
+
+    function setValueIncrement(
+        uint256 _value
+    )
+        external
+    {
+
+        value =
+            value + _value;
+
+        emit ValueUpdated(
+            value
+        );
+    }
+}
+
+/*
+=========================================================
+SAFE PROXY CONTRACT
+=========================================================
+*/
+
+contract SafeProxy {
+
+    /*
+        STORAGE LAYOUT
+        MATCHES IMPLEMENTATION
+    */
+
+    uint256 public value;
+    address public owner;
+    bool internal initialized;
+
+    /*
+        PROXY VARIABLES
+        ADDED AFTER LOGIC STORAGE
+    */
+
+    address public implementation;
+    address public admin;
+
+    /*
+    =====================================================
+    EVENTS
+    =====================================================
+    */
+
+    event Upgraded(
+        address implementation
+    );
+
+    /*
+    =====================================================
+    CONSTRUCTOR
+    =====================================================
+    */
+
+    constructor(
+        address _implementation
+    ) {
+
+        implementation =
+            _implementation;
+
+        admin = msg.sender;
+    }
+
+    /*
+    =====================================================
+    ONLY ADMIN
+    =====================================================
+    */
+
+    modifier onlyAdmin() {
+
+        require(
+            msg.sender == admin,
+            "Not admin"
+        );
+
+        _;
+    }
+
+    /*
+    =====================================================
+    UPGRADE IMPLEMENTATION
+    =====================================================
+    */
+
+    function upgrade(
+        address _newImplementation
+    )
+        external
+        onlyAdmin
+    {
+
+        require(
+            _newImplementation !=
+            address(0),
+            "Invalid implementation"
+        );
+
+        implementation =
+            _newImplementation;
+
+        emit Upgraded(
+            _newImplementation
+        );
+    }
+
+    /*
+    =====================================================
+    FALLBACK
+    =====================================================
+    */
+
+    fallback()
+        external
+        payable
+    {
+        _delegate();
+    }
+
+    receive()
+        external
+        payable
+    {
+        _delegate();
+    }
+
+    /*
+    =====================================================
+    INTERNAL DELEGATE
+    =====================================================
+    */
+
+    function _delegate()
+        internal
+    {
+
+        address impl = implementation;
+
+        require(
+            impl != address(0),
+            "Implementation missing"
+        );
+
+        assembly {
+
+            calldatacopy(0,0,calldatasize() )
+
+            let result :=
+                delegatecall(
+                    gas(),
+                    impl,
+                    0,
+                    calldatasize(),
+                    0,
+                    0
+                )
+
+            returndatacopy(0,0,returndatasize() )
+
+            switch result
+
+            case 0 {
+
+                revert(
+                    0,
+                    returndatasize()
+                )
+            }
+
+            default {
+
+                return(
+                    0,
+                    returndatasize()
+                )
+            }
+        }
+    }
+}

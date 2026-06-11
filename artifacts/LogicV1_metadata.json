@@ -6,6 +6,32 @@
 	"output": {
 		"abi": [
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "ValueUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -16,19 +42,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_owner",
-						"type": "address"
-					}
-				],
-				"name": "setOwner",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -71,7 +84,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"val81.sol": "LogicV1"
+			"val82.sol": "LogicV1"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -85,12 +98,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"val81.sol": {
-			"keccak256": "0xd00a37524cec89074977a68af9d8c7345c0007ac08c95a7c3d45b7bceb92ff7b",
+		"val82.sol": {
+			"keccak256": "0xb58ad855872bcff98c3876ab0bddd05126174983e07d5c770dca59095783b11f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://02362f162d1623d094d0b32f61ed620383a4d72317e159e7b2f2c8f553d586f8",
-				"dweb:/ipfs/QmYXUn8qyGFBXumdeCbhGRVdT52RDHF5Nkmi4A3u7WZuuc"
+				"bzz-raw://a68ef4d7babe8258571ef415ec0301c6969396d79c403897275c6f4f0096eda0",
+				"dweb:/ipfs/QmZUWcJcFMDXQ45LDgZ91UqgmH23sbi8t1mTqF2Fv5JQEX"
 			]
 		}
 	},
