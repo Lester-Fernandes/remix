@@ -28,52 +28,52 @@ FORCED ETH CONTRACT (TARGET)
 =========================================================
 */
 
-contract VictimContract {
+// contract VictimContractval {
 
-    /*
-        This contract CANNOT reject ETH sent via selfdestruct
-    */
+//     /*
+//         This contract CANNOT reject ETH sent via selfdestruct
+//     */
 
-    uint256 public balanceTracker;
+//     uint256 public balanceTracker;
 
-    function update() external payable {
-        balanceTracker += msg.value;
-    }
+//     function update() external payable {
+//         balanceTracker += msg.value;
+//     }
 
-    function getBalance() external view returns (uint256) {
-        return address(this).balance;
-    }
-}
+//     function getBalance() external view returns (uint256) {
+//         return address(this).balance;
+//     }
+// }
 
-/*
-=========================================================
-ATTACK CONTRACT USING selfdestruct
-=========================================================
-*/
+// /*
+// =========================================================
+// ATTACK CONTRACT USING selfdestruct
+// =========================================================
+// */
 
-contract ForceEtherSender {
+// contract ForceEtherSenderval {
 
-    /*
-    =====================================================
-    FORCE ETH INTO TARGET
-    =====================================================
-    */
+//     /*
+//     =====================================================
+//     FORCE ETH INTO TARGET
+//     =====================================================
+//     */
 
-    function forceSend(address payable target) external payable {
+//     function forceSend(address payable target) external payable {
 
-        /*
-            Step 1:
-            Contract receives ETH
-        */
+//         /*
+//             Step 1:
+//             Contract receives ETH
+//         */
 
-        /*
-            Step 2:
-            selfdestruct sends ETH to target
-        */
+//         /*
+//             Step 2:
+//             selfdestruct sends ETH to target
+//         */
 
-        selfdestruct(target);
-    }
-}
+//         selfdestruct(target);
+//     }
+// }
 
 /*
 =========================================================
@@ -171,3 +171,320 @@ KEY TAKEAWAYS
 
 =========================================================
 */
+/*
+Title: Forced ETH injection via selfdestruct
+
+Severity: Medium
+
+Vulnerable: selfdestruct(target);
+selfdestruct() forcibly transfers ETH to the target contract
+
+This transfer:
+- bypasses receive()
+- bypasses fallback()
+- bypasses payable restrictions
+- cannot be rejected
+
+Impact: Attacker can
+- maniplulate contract balances
+- break accounting assumptions
+- interfere with balance-based logic
+- invalidate invariant checks
+
+Proof of Concept:
+Step 1 — Deploy Victim
+VictimContract victim = new VictimContract();
+Step 2 — Deposit Normally
+victim.update{value: 1 ether}();
+
+State:
+
+Variable	Value
+balanceTracker	1 ETH
+actual balance	1 ETH
+Step 3 — Force ETH
+
+Attacker executes:
+
+forceSend(victim);
+
+using selfdestruct.
+
+Step 4 — State Corruption
+
+Now:
+
+Variable	Value
+balanceTracker	1 ETH
+actual balance	2 ETH
+
+Accounting mismatch occurs.
+*/
+
+// PATCHED CODE
+
+contract SafeVault {
+
+    /*
+        USER BALANCES
+    */
+    mapping(address => uint256) public balances;
+
+    /*
+        TRACK ONLY LEGITIMATE DEPOSITS
+    */
+    uint256 public trackedDeposits;
+
+    /*
+        OWNER
+    */
+    address public owner;
+
+    /*
+    =====================================================
+    EVENTS
+    =====================================================
+    */
+
+    event Deposited(
+        address indexed user,
+        uint256 amount
+    );
+
+    event Withdrawn(
+        address indexed user,
+        uint256 amount
+    );
+
+    event ForcedETHDetected(
+        uint256 unexpectedAmount
+    );
+
+    event RescueETH(
+        uint256 amount
+    );
+
+    /*
+    =====================================================
+    MODIFIER
+    =====================================================
+    */
+
+    modifier onlyOwner() {
+        require(
+            msg.sender == owner,
+            "Not owner"
+        );
+        _;
+    }
+
+    /*
+    =====================================================
+    CONSTRUCTOR
+    =====================================================
+    */
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    /*
+    =====================================================
+    RECEIVE ETH
+    =====================================================
+
+    Accept ETH safely.
+    */
+
+    receive()
+        external
+        payable
+    {
+
+    }
+
+    /*
+    =====================================================
+    SAFE DEPOSIT
+    =====================================================
+    */
+
+    function deposit()
+        external
+        payable
+    {
+        require(
+            msg.value > 0,
+            "Zero ETH"
+        );
+
+        balances[msg.sender] += msg.value;
+
+        trackedDeposits += msg.value;
+
+        emit Deposited(
+            msg.sender,
+            msg.value
+        );
+    }
+
+    /*
+    =====================================================
+    SAFE WITHDRAW
+    =====================================================
+    */
+
+    function withdraw(
+        uint256 amount
+    )
+        external
+    {
+        require(
+            balances[msg.sender] >= amount,
+            "Insufficient balance"
+        );
+
+        /*
+            CHECKS -> EFFECTS -> INTERACTIONS
+        */
+
+        balances[msg.sender] -= amount;
+
+        trackedDeposits -= amount;
+
+        (bool success, ) =
+            payable(msg.sender).call{
+                value: amount
+            }("");
+
+        require(
+            success,
+            "Transfer failed"
+        );
+
+        emit Withdrawn(
+            msg.sender,
+            amount
+        );
+    }
+
+    /*
+    =====================================================
+    DETECT FORCED ETH
+    =====================================================
+
+    Compare actual balance vs tracked deposits.
+    */
+
+    function detectForcedETH()
+        public
+        returns (uint256)
+    {
+        uint256 actualBalance =
+            address(this).balance;
+
+        if (
+            actualBalance > trackedDeposits
+        ) {
+
+            uint256 extra =
+                actualBalance -
+                trackedDeposits;
+
+            emit ForcedETHDetected(
+                extra
+            );
+
+            return extra;
+        }
+
+        return 0;
+    }
+
+    /*
+    =====================================================
+    RESCUE UNEXPECTED ETH
+    =====================================================
+
+    Withdraw ONLY extra forced ETH.
+    */
+
+    function rescueForcedETH()
+        external
+        onlyOwner
+    {
+        uint256 extra =
+            detectForcedETH();
+
+        require(
+            extra > 0,
+            "No forced ETH"
+        );
+
+        (bool success, ) =
+            payable(owner).call{
+                value: extra
+            }("");
+
+        require(
+            success,
+            "Rescue failed"
+        );
+
+        emit RescueETH(extra);
+    }
+
+    /*
+    =====================================================
+    VIEW FUNCTIONS
+    =====================================================
+    */
+
+    function getActualBalance()
+        external
+        view
+        returns (uint256)
+    {
+        return address(this).balance;
+    }
+
+    function getTrackedBalance()
+        external
+        view
+        returns (uint256)
+    {
+        return trackedDeposits;
+    }
+}
+
+/*
+=========================================================
+ATTACK CONTRACT
+FORCE SEND ETH USING SELFDESTRUCT
+=========================================================
+*/
+
+contract ForceEtherSender {
+
+    /*
+    =====================================================
+    FORCE SEND ETH
+    =====================================================
+    */
+
+    function forceSend(
+        address payable target
+    )
+        external
+        payable
+    {
+
+        /*
+            Force ETH into target.
+
+            Cannot be blocked.
+        */
+
+        selfdestruct(target);
+    }
+}
